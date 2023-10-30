@@ -1,0 +1,160 @@
+#include <DHT.h>
+#include <LiquidCrystal.h>
+
+DHT dht(13, DHT22); // definindo pino do DHT
+
+int ledVerde = 7; // definindo pino de LEDS
+int ledAmarelo = 6; // definindo pino de LEDS
+int ledVermelho = 5; // definindo pino de LEDS
+int buzzerAlarm = 12; // definindo pino de Buzzer
+
+int sensorLDR = A5; // definindo pino do SensorLDR
+LiquidCrystal lcd (11, 10, 9, 8, 4, 3); // RS, E, D4, D5, D6, D7
+
+long tempoAnterior = 0;
+
+void setup()
+{
+  pinMode(ledVerde, OUTPUT);
+  pinMode(ledAmarelo, OUTPUT);
+  pinMode(ledVermelho, OUTPUT);
+  pinMode(buzzerAlarm, OUTPUT);
+  pinMode(sensorLDR, INPUT);
+  dht.begin();
+  lcd.begin(16,2);
+  Serial.begin(9600);
+}
+
+// Iniciando loop usando a variável do LDR como base para ascender os LEDs.
+void loop()
+{
+  ldr();
+  ambienteTemp();
+  ambienteHumi();
+  delay(1000);
+}
+
+void ldr(){
+  int leitura = analogRead(sensorLDR);
+  Serial.print("Leitura: ");
+  Serial.println(leitura);
+  if(analogRead(sensorLDR) > 600){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Luz ambiente ok!");
+    noTone(buzzerAlarm);
+    digitalWrite(ledVerde, HIGH);
+    digitalWrite(ledAmarelo, LOW);
+    digitalWrite(ledVermelho, LOW);
+  }  
+  else if (analogRead(sensorLDR) > 120) {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Ambiente a meia");
+    lcd.setCursor(0,1);
+    lcd.print("luz!");
+    digitalWrite(ledAmarelo, HIGH);
+    digitalWrite(ledVerde, LOW);
+    digitalWrite(ledVermelho, LOW);
+    }
+  else{
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Ambiente muito");
+    lcd.setCursor(0,1);
+    lcd.print("claro!");
+    digitalWrite(ledVermelho, HIGH);
+    digitalWrite(ledAmarelo, LOW);
+    digitalWrite(ledVerde, LOW);
+  }
+}
+
+void ambienteTemp(){
+  float tempSum = 0;
+  float temperature = dht.readTemperature();
+  if(millis() >= tempoAnterior + 1000){
+    for (int i = 0; i < 5; i++) {
+      tempSum += temperature;
+      delay(1000);
+    }
+  }
+  float tempMedia = tempSum / 5;
+  float temperatura = dht.readTemperature();
+  Serial.print("Temperatura = ");
+  Serial.println(temperatura);
+  if (tempMedia > 10 & tempMedia < 15){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Temperatura OK");
+    lcd.setCursor(0,1);
+    lcd.print(tempMedia);
+    delay(1000);
+  }
+  else if (tempMedia > 15){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Temp. Alta!");
+    lcd.setCursor(0,1);
+    lcd.print("Temp. = ");
+    lcd.print(tempMedia);
+    lcd.print("°C");
+    tone(buzzerAlarm, 261);
+  }
+  else {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Temp. Baixa!");
+    lcd.setCursor(0,1);
+    lcd.print("Temp. = ");
+    lcd.print(tempMedia);
+    lcd.print("°C");
+    tone(buzzerAlarm, 261);
+    delay(3000);
+    noTone(buzzerAlarm);
+    delay(3000);
+  }
+}
+
+void ambienteHumi(){
+  float humiditySum = 0;
+  float humidity = dht.readHumidity();
+  if(millis() >= tempoAnterior + 1000){
+    for (int i = 0; i < 5; i++) {
+      humiditySum += humidity;
+      delay(1000);
+    }
+  }
+  float humiMedia = humiditySum / 5;
+  float umidade = dht.readHumidity();
+  Serial.print("Umidade = ");
+  Serial.println(umidade);
+  if (humiMedia > 60 & humiMedia < 80){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Umidade OK");
+    lcd.setCursor(0,1);
+    lcd.print(humiMedia);
+    lcd.print("ºC");
+  }
+  else if (humiMedia > 80){
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Umidade ALTA!");
+    lcd.setCursor(0,1);
+    lcd.print(humiMedia);
+    lcd.print("%");
+    tone(buzzerAlarm, 261);
+  }
+  else {
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Umidade BAIXA!");
+    lcd.setCursor(0,1);
+    lcd.print(humiMedia);
+    lcd.print("%");
+    tone(buzzerAlarm, 261);
+    delay(3000);
+    noTone(buzzerAlarm);
+    delay(3000);
+  }
+}
