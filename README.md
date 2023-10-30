@@ -22,4 +22,4 @@ Watch a project demonstration on [YouTube](https://www.youtube.com/watch?v=LERsx
 ## Project Links
 - Project on Wokwi: [Wokwi](https://wokwi.com/projects/379980849278520321)
 
-![Arduino Image](https://example.com/arduino_image.png)
+![Arduino Image](blob:https://web.whatsapp.com/d4667016-ca42-45de-ac57-2fad1c403fc0)
