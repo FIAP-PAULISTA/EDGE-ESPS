@@ -29,9 +29,10 @@ void setup()
 void loop()
 {
   ldr();
+  delay(1000);
   ambienteTemp();
   ambienteHumi();
-  delay(1000);
+  delay(5000);
 }
 
 void ldr(){
@@ -70,6 +71,7 @@ void ldr(){
 }
 
 void ambienteTemp(){
+  tempoAnterior = 0;
   float tempSum = 0;
   float temperature = dht.readTemperature();
   if(millis() >= tempoAnterior + 1000){
@@ -77,6 +79,7 @@ void ambienteTemp(){
       tempSum += temperature;
       delay(1000);
     }
+    tempoAnterior = millis();
   }
   float tempMedia = tempSum / 5;
   float temperatura = dht.readTemperature();
@@ -87,7 +90,9 @@ void ambienteTemp(){
     lcd.setCursor(0,0);
     lcd.print("Temperatura OK");
     lcd.setCursor(0,1);
+    lcd.print("Temp. = ");
     lcd.print(tempMedia);
+    lcd.print("ºC");
     delay(1000);
   }
   else if (tempMedia > 15){
@@ -135,12 +140,14 @@ void ambienteHumi(){
     lcd.setCursor(0,1);
     lcd.print(humiMedia);
     lcd.print("ºC");
+    delay(1000);
   }
   else if (humiMedia > 80){
     lcd.clear();
     lcd.setCursor(0,0);
     lcd.print("Umidade ALTA!");
     lcd.setCursor(0,1);
+    lcd.print("Umidade: ");
     lcd.print(humiMedia);
     lcd.print("%");
     tone(buzzerAlarm, 261);
@@ -150,6 +157,7 @@ void ambienteHumi(){
     lcd.setCursor(0,0);
     lcd.print("Umidade BAIXA!");
     lcd.setCursor(0,1);
+    lcd.print("Umidade: ");
     lcd.print(humiMedia);
     lcd.print("%");
     tone(buzzerAlarm, 261);
