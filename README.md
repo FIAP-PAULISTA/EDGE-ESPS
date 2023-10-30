@@ -19,5 +19,5 @@ O projeto foi desenvolvido por:
 ## Demonstração
 Assista a uma demonstração do projeto no [YouTube](https://www.youtube.com/watch?v=LERsxwInhY0).
 
-## Links Úteis
+## Links do projeto
 - Projeto no Wokwi: [Wokwi](https://wokwi.com/projects/379980849278520321)
