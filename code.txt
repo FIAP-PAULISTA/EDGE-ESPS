@@ -121,6 +121,7 @@ void ambienteTemp(){
 }
 
 void ambienteHumi(){
+  tempoAnterior = 0;
   float humiditySum = 0;
   float humidity = dht.readHumidity();
   if(millis() >= tempoAnterior + 1000){
@@ -128,6 +129,7 @@ void ambienteHumi(){
       humiditySum += humidity;
       delay(1000);
     }
+    tempoAnterior = millis();
   }
   float humiMedia = humiditySum / 5;
   float umidade = dht.readHumidity();
