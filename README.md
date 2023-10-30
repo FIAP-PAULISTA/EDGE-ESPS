@@ -1,14 +1,14 @@
-# Projeto EDGE-ESPS - Sistema de Controle de Buzzer e Monitoramento de Dados
+# EDGE-ESPS Project - Buzzer Control and Data Monitoring System
 
-## Visão Geral
-Este projeto aborda os seguintes problemas:
+## Overview
+This project addresses the following issues:
 
-1. **Problema do Buzzer:** O buzzer estava tocando em momentos que não deveriam. Para resolver esse problema, ajustamos um `if` para cada bloco com o buzzer (tanto desligado, quanto ligado).
+1. **Buzzer Problem:** The buzzer was sounding at times when it shouldn't. To solve this problem, we adjusted an `if` statement for each buzzer block (both on and off).
 
-2. **Monitoramento de Dados:** Tivemos o desafio de juntar os cinco últimos resultados do DHT e tirar uma média deles. Para solucionar isso, utilizamos loops `for` e conseguimos armazenar e dividir os dados a cada 5 segundos.
+2. **Data Monitoring:** We faced the challenge of collecting the last five DHT results and calculating their average. To solve this, we used `for` loops and managed to store and process the data every 5 seconds.
 
-## Integrantes
-O projeto foi desenvolvido por:
+## Team Members
+The project was developed by:
 
 - Jorge Henrique Freire Booz - RM 552700
 - Caio Hideki Cardenas Ishizu - RM 553630
@@ -16,8 +16,10 @@ O projeto foi desenvolvido por:
 - Erick Molina Barreiros - RM 553852
 - Marcelo Vieira de Melo - RM 552953
 
-## Demonstração
-Assista a uma demonstração do projeto no [YouTube](https://www.youtube.com/watch?v=LERsxwInhY0).
+## Demonstration
+Watch a project demonstration on [YouTube](https://www.youtube.com/watch?v=LERsxwInhY0).
 
-## Links do projeto
-- Projeto no Wokwi: [Wokwi](https://wokwi.com/projects/379980849278520321)
+## Project Links
+- Project on Wokwi: [Wokwi](https://wokwi.com/projects/379980849278520321)
+
+![Arduino Image](https://example.com/arduino_image.png)
